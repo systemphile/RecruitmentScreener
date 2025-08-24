@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from screener.models import Employer, Job, ScreeningQuestion, TemplateQuestion, Candidate, CandidateAnswer, CandidateResponse
+from jobsafi.models import Employer, Job, ScreeningQuestion, TemplateQuestion, Candidate, CandidateAnswer, CandidateResponse
 from .serializers import EmployerSerializer, JobSerializer, ScreeningQuestionSerializer, TemplateQuestionSerializer, CandidateSerializer, CandidateAnswerSerializer, CandidateResponseSerializer
 
 class EmployerViewSet(viewsets.ModelViewSet):

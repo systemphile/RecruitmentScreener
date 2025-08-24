@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Screener{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'screener/style.css' %}">
+    <script src="{% static 'screener/script.js' %}" defer></script>
+</head>
+<body>
+    <nav class="navbar">
+        <h1><a href="{% url 'home' %}">Job Screener</a></h1>
+    </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

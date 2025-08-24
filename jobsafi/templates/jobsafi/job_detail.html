@@ -1,0 +1,17 @@
+{% extends "jobsafi/base.html" %}
+{% block title %}{{ job.title }}{% endblock %}
+{% block content %}
+<h2>{{ job.title }}</h2>
+<p>{{ job.description }}</p>
+
+<h3>Screening Questions</h3>
+<form id="answer-form">
+    {% for question in questions %}
+        <div class="question-block">
+            <label>{{ question.text }}</label><br>
+            <textarea name="q{{ question.id }}" rows="3"></textarea>
+        </div>
+    {% endfor %}
+    <button type="submit">Submit Answers</button>
+</form>
+{% endblock %}

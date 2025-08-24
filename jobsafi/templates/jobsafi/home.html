@@ -1,0 +1,12 @@
+{% extends "jobsafi/base.html" %}
+{% block title %}All Jobs{% endblock %}
+{% block content %}
+<h2>Available Jobs</h2>
+<ul class="job-list">
+    {% for job in jobs %}
+        <li><a href="{% url 'job_detail' job.pk %}">{{ job.title }}</a></li>
+    {% empty %}
+        <p>No jobs available.</p>
+    {% endfor %}
+</ul>
+{% endblock %}
