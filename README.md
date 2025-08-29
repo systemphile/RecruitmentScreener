@@ -113,7 +113,7 @@ recruiter_screener/ # Project folder (repo root)
 - [x] Set up Django + DRF project skeleton  
 - [x] Implement models & migrations  
 - [x] Implement serializers & views  
-- [ ] Add authentication & authorization  
+- [x] Add authentication & authorization  
 - [x] Implement CRUD endpoints  
 - [ ] Implement auto-generation of screening questions  
 - [ ] Deploy to Heroku/PythonAnywhere  
