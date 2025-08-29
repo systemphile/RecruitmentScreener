@@ -2,14 +2,14 @@
 
 #### Overview
 
-Recruiter Screener is a Django + Django REST Framework project designed to help recruiters streamline candidate screening.  
+JobSafi is Recruiter Screener app, a Django + Django REST Framework project designed to help recruiters streamline candidate screening.  
 The system **auto-generates screening questions** based on job descriptions and associated tags, giving recruiters an instant screener they can use in their hiring process.  
 
 This project is developed as a capstone project.
 
 #### Features
 
-* **User Management**: Employers (recruiters), Candidates and Admin roles.  
+* **User Management**: Employers (recruiters), and Admin roles.  
 * **Job Posting**: Employers create and manage job listings with tags/keywords.  
 * **Auto-Generated Screening Questions**: Generated from predefined template questions mapped to job tags.  
 * **Custom Screening Questions**: Employers can add their own custom questions.  
@@ -30,7 +30,7 @@ This project is developed as a capstone project.
 ``` markdown
 recruiter_screener/ # Project folder (repo root)
 │── recruiter_screener/ # Main Django project (settings, wsgi, asgi)
-│── screener/ # Core app: models, business logic, admin
+│── jobsafi/ # Core app: models, business logic, admin
 │ │── models.py
 │ │── views.py
 │ │── urls.py
@@ -112,9 +112,9 @@ recruiter_screener/ # Project folder (repo root)
 - [x] Create ERD and endpoint plan  
 - [x] Set up Django + DRF project skeleton  
 - [x] Implement models & migrations  
-- [ ] Implement serializers & views  
+- [x] Implement serializers & views  
 - [ ] Add authentication & authorization  
-- [ ] Implement CRUD endpoints  
+- [x] Implement CRUD endpoints  
 - [ ] Implement auto-generation of screening questions  
 - [ ] Deploy to Heroku/PythonAnywhere  
 - [ ] Final testing & documentation  
