@@ -13,7 +13,7 @@ from jobsafi.models import (
 from .serializers import (
     EmployerSerializer, JobSerializer, ScreeningQuestionSerializer,
     TemplateQuestionSerializer, CandidateSerializer,
-    JobDetailSerializer, CandidateResponseSerializer, ScreeningQuestionSerializer
+    JobDetailSerializer, CandidateResponseSerializer, ScreeningQuestionSerializer, CandidateAnswerSerializer
 )
 
 
@@ -315,4 +315,41 @@ class CandidateResponseViewSet(viewsets.ModelViewSet):
         return Response(
             {"message": "Answers submitted successfully!", "response_id": response_obj.id},
             status=status.HTTP_201_CREATED
+        )
+
+class CandidateAnswerViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for managing candidate answers.
+    """
+    serializer_class = CandidateAnswerSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        response_pk = self.kwargs.get('response_pk')
+        return CandidateAnswer.objects.filter(response_id=response_pk)
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['response_pk'] = self.kwargs.get('response_pk')
+        return context
+
+    @action(detail=True, methods=['patch'])
+    def score(self, request, response_pk=None, pk=None):
+        """Update the score of a specific answer"""
+        answer = self.get_object()
+        score = request.data.get('score')
+        
+        if score is not None:
+            answer.score = score
+            answer.save()
+            
+            # Recalculate overall response score
+            answer.response.calculate_overall_score()
+            answer.response.save()
+            
+            return Response({'score': answer.score})
+        
+        return Response(
+            {'error': 'Score is required'}, 
+            status=status.HTTP_400_BAD_REQUEST
         )

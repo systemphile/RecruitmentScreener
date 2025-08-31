@@ -109,7 +109,15 @@ class CandidateSerializer(serializers.ModelSerializer):
 class CandidateAnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = CandidateAnswer
-        fields = ["id", 'question', 'answer_text', 'score']
+        fields = ["id", "response", "question", "answer_text", "score"]
+        read_only_fields = ["id", "response", "question", "answer_text"]
+
+    def create(self, validated_data):
+        # Auto-set response from URL parameter
+        response_id = self.context.get('response_id')
+        if response_id:
+            validated_data['response_id'] = response_id
+        return super().create(validated_data)
 
 
 class CandidateResponseSerializer(serializers.ModelSerializer):

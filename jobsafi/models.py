@@ -86,8 +86,9 @@ class CandidateResponse(models.Model):
         answers = self.answers.exclude(score__isnull=True)
         if not answers.exists():
             return None
-        total = sum(a.score for a in answers)
-        return total / answers.count()
+        total = sum(answer.score for answer in answers)
+        self.overall_score = total / answers.count()
+        return self.overall_score
 
 
 # Candidate answers to individual screening questions
