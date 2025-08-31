@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from taggit.managers import TaggableManager
 
+
 # Employer model (system users who create jobs and screen candidates)
 class Employer(AbstractUser):
     phone = models.CharField(max_length=20, blank=True, null=True)
@@ -18,7 +19,9 @@ class Employer(AbstractUser):
 
 # Job model (submitted by Employer, generates screening questions)
 class Job(models.Model):
-    employer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="jobs")
+    employer = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="jobs"
+    )
     title = models.CharField(max_length=200)
     description = models.TextField()
     seniority = models.CharField(max_length=50)
@@ -30,7 +33,9 @@ class Job(models.Model):
 
 # Screening questions for a specific Job
 class ScreeningQuestion(models.Model):
-    job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name="questions")
+    job = models.ForeignKey(
+        Job, on_delete=models.CASCADE, related_name="questions"
+    )
     text = models.TextField()
     is_custom = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
@@ -51,7 +56,9 @@ class TemplateQuestion(models.Model):
 
 # Candidate model (individuals being screened for a Job)
 class Candidate(models.Model):
-    job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name="candidates")
+    job = models.ForeignKey(
+        Job, on_delete=models.CASCADE, related_name="candidates"
+    )
     name = models.CharField(max_length=200)
     email = models.EmailField(unique=True)
     resume = models.FileField(upload_to="resumes/", blank=True, null=True)
@@ -62,8 +69,12 @@ class Candidate(models.Model):
 
 # Candidate response session (all answers per candidate for a specific job)
 class CandidateResponse(models.Model):
-    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, related_name="responses")
-    job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name="responses")
+    candidate = models.ForeignKey(
+        Candidate, on_delete=models.CASCADE, related_name="responses"
+    )
+    job = models.ForeignKey(
+        Job, on_delete=models.CASCADE, related_name="responses"
+    )
     submitted_at = models.DateTimeField(auto_now_add=True)
     overall_score = models.FloatField(null=True, blank=True)
 
@@ -72,16 +83,21 @@ class CandidateResponse(models.Model):
 
     def calculate_overall_score(self):
         """Recalculate overall score as average of all answer scores."""
-        answers = self.answers.all().exclude(score__isnull=True)
+        answers = self.answers.exclude(score__isnull=True)
         if not answers.exists():
             return None
         total = sum(a.score for a in answers)
         return total / answers.count()
 
+
 # Candidate answers to individual screening questions
 class CandidateAnswer(models.Model):
-    response = models.ForeignKey(CandidateResponse, on_delete=models.CASCADE, related_name="answers")
-    question = models.ForeignKey(ScreeningQuestion, on_delete=models.CASCADE, related_name="answers")
+    response = models.ForeignKey(
+        CandidateResponse, on_delete=models.CASCADE, related_name="answers"
+    )
+    question = models.ForeignKey(
+        ScreeningQuestion, on_delete=models.CASCADE, related_name="answers"
+    )
     answer_text = models.TextField()
     score = models.IntegerField(null=True, blank=True)
 
