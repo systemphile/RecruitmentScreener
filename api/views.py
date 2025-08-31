@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from jobsafi.utils import auto_generate_questions
 
 from jobsafi.models import (
@@ -212,7 +213,8 @@ class CandidateResponseViewSet(viewsets.ModelViewSet):
     queryset = CandidateResponse.objects.all()
     serializer_class = CandidateResponseSerializer
     permission_classes = [AllowAny]
-    authentication_classes = []
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+
 
     def create(self, request, job_id=None):
         data = request.data.copy()
