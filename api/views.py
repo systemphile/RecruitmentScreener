@@ -213,7 +213,7 @@ class CandidateResponseViewSet(viewsets.ModelViewSet):
     queryset = CandidateResponse.objects.all()
     serializer_class = CandidateResponseSerializer
     permission_classes = [AllowAny]
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    authentication_classes = []
 
 
     def create(self, request, job_id=None):
